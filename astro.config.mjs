@@ -2,13 +2,13 @@ import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 
 export default defineConfig({
-  output: 'hybrid',
+  output: 'server',
   adapter: node({
-    mode: 'standalone'
+    mode: 'standalone', 
   }),
   vite: {
     ssr: {
-      noExternal: ['nodemailer']
+      noExternal: ['nodemailer'], 
     },
     resolve: {
       alias: {
