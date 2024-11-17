@@ -1,11 +1,18 @@
 import { defineConfig } from 'astro/config';
+import node from '@astrojs/node';
 
 export default defineConfig({
-  output: 'static', // Asegúrate de que el sitio sea estático
+  output: 'hybrid',
+  adapter: node({
+    mode: 'standalone'
+  }),
   vite: {
+    ssr: {
+      noExternal: ['nodemailer']
+    },
     resolve: {
       alias: {
-        '@assets': '/src/assets', // Asegúrate de que esta ruta sea válida
+        '@assets': '/src/assets',
       },
     },
   },

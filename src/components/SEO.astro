@@ -1,0 +1,305 @@
+---
+// SEO.astro
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  keywords?: string;
+  author?: string;
+  themeColor?: string;
+}
+
+const props = Astro.props;
+
+const title = props.title;
+const description = props.description;
+const image = props.image ?? '/og-image.jpg';
+const keywords = props.keywords ?? 'shopify, ecommerce, desarrollo web, crecimiento digital, highdatanet';
+const author = props.author ?? 'Highdatanet';
+const themeColor = props.themeColor ?? '#96BF48';
+
+type JsonLd = {
+  "@context": "https://schema.org";
+  "@type": string;
+  [key: string]: any;
+}
+
+const organizationJsonLd: JsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Highdatanet",
+  "url": "https://highdatanet.com",
+  "logo": "https://highdatanet.com/logo.png",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+34633464544",
+    "contactType": "customer service",
+    "areaServed": ["ES"],
+    "availableLanguage": ["Spanish"]
+  }
+};
+
+const serviceJsonLd: JsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Highdatanet",
+  "image": image,
+  "description": description,
+  "@id": "https://highdatanet.com",
+  "url": "https://highdatanet.com",
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ],
+    "opens": "09:00",
+    "closes": "19:00"
+  },
+  "sameAs": [
+    "https://www.facebook.com/HighDataNet",
+    "https://www.linkedin.com/company/highdatanet"
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "reviewCount": "15"
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "David Ruiz",
+        "jobTitle": "Director en Ekai"
+      },
+      "reviewBody": "El equipo de Highdatanet demostró una comprensión profunda de nuestras necesidades y objetivos. Su capacidad para transformar nuestras ideas en una realidad tangible y efectiva ha sido impresionante."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Antonio Gallardo",
+        "jobTitle": "CEO en Marketing Digital y Producciones del Estrecho"
+      },
+      "reviewBody": "El trato profesional de su CEO y el carácter de individualidad que nos han dado como clientes, atendiendo nuestras inquietudes específicas con profesionalidad."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Jose Miguel Espinar",
+        "jobTitle": "CEO en Agile Marketing Studio"
+      },
+      "reviewBody": "Sobre todo la adaptabilidad, la comunicación y, como no, los resultados. En general por encima de nuestras espectativas."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Adrián González Barbé",
+        "jobTitle": "CEO en CULTUCREA"
+      },
+      "reviewBody": "Adrián es la persona que todo el mundo querría tener en su equipo. Profesional, ambicioso y soñador. Una persona que es capaz de soñar contigo tus proyectos y aterrizarlos en forma de Web."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Pau Rodrigo",
+        "jobTitle": "CEO en Neo ROI"
+      },
+      "reviewBody": "La colaboración con el equipo de High Data Net fue muy fluida, con fácil comunicación y una implementación ágil. Supieron entender rápidamente lo que necesitábamos."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Carlos Herrera",
+        "jobTitle": "Dueño en Estilo al Click"
+      },
+      "reviewBody": "Quería dar el salto al mundo digital y poder vender mis productos online. La agencia se encargó de todo y me ayudaron a entender cómo funciona una tienda en línea. La web que hicieron para mí es fácil de manejar y muy atractiva."
+    }
+  ]
+};
+
+const breadcrumbJsonLd: JsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Inicio",
+    "item": "https://highdatanet.com"
+  }, {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Servicios Shopify",
+    "item": "https://highdatanet.com/servicios"
+  }]
+};
+
+const faqJsonLd: JsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Hacéis migraciones de Woocommerce/PrestaShop/Wix... a Shopify?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, realizamos migraciones completas desde plataformas como WooCommerce, PrestaShop, Magento y Wix a Shopify. Nos encargamos de transferir de manera segura todos tus datos esenciales, optimizando y configurando tu nueva tienda para mejorar la experiencia del usuario y maximizar las ventas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "No conozco Shopify, ¿qué tengo que aprender?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No te preocupes, Shopify es una plataforma muy intuitiva y fácil de usar, diseñada para personas sin conocimientos de programación. Además, en HighDataNet te proporcionaremos una formación completa para que puedas gestionar tu tienda de manera eficaz y autónoma."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuál es el proceso de desarrollo de una tienda Shopify?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nuestro proceso comienza con una consultoría inicial para entender tus necesidades y objetivos. Luego, realizamos un análisis y planificación detallados, seguidos por el diseño personalizado y el desarrollo técnico. Tras una fase de pruebas rigurosas, lanzamos la tienda y proporcionamos soporte post-lanzamiento para asegurar su correcto funcionamiento y éxito."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto tiempo tarda en completarse el desarrollo de una tienda Shopify?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El tiempo de desarrollo varía según la complejidad y los requisitos específicos del proyecto. En general, el proceso puede tardar entre 4 a 10 semanas. Durante la consultoría inicial, proporcionaremos un cronograma más preciso basado en tus necesidades."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué costes están asociados con el diseño y desarrollo de una tienda Shopify?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Aparte del coste de nuestros servicios, en función de las necesidades de tu tienda, es posible que necesites ciertas aplicaciones (plugins) de pago, así como la cuota de Shopify (anual o mensual). Todos estos costes se plantearán en la consultoría inicial. El plan base de Shopify empieza en…"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Mi tienda estará preparada en otros idiomas, países y moneda?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Si tu objetivo es vender en más países, idiomas o monedas, sí."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Necesito hacer integraciones personalizadas, ¿es posible?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Realizamos integraciones con una amplia variedad de herramientas, incluyendo plataformas de email marketing como MailChimp, CRMs y ERPs como Holded y Salesforce, herramientas de análisis, así como soluciones de inteligencia artificial y chatbots."
+      }
+    }
+  ]
+};
+---
+
+<!-- Meta Tags Básicos -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<!-- Idioma y canonical -->
+<link rel="canonical" href={Astro.url.href} />
+<meta http-equiv="content-language" content="es" />
+
+<!-- SEO básico -->
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="keywords" content={keywords} />
+<meta name="author" content={author} />
+<meta name="robots" content="index, follow" />
+
+<!-- Control de cache -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<!-- PWA -->
+<meta name="application-name" content="Highdatanet">
+<meta name="apple-mobile-web-app-title" content="Highdatanet">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content={themeColor} />
+
+<!-- Open Graph -->
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={Astro.url.href} />
+<meta property="og:image" content={`${Astro.site}og/og-image.jpg`}>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Highdatanet - Expertos en Shopify">
+<meta property="og:site_name" content="Highdatanet" />
+<meta property="og:locale" content="es_ES" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={`${Astro.site}og/twitter-card.jpg`}>
+
+<!-- Favicons -->
+<link rel="shortcut icon" href="/favicon/favicon.ico" type="image/x-icon">
+<link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon/favicon-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon/favicon-512x512.png">
+
+<!-- Apple Touch Icons -->
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+<link rel="apple-touch-icon-precomposed" sizes="180x180" href="/favicon/apple-icon-precomposed.png">
+
+<!-- Sitemap -->
+<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+<!-- JSON-LD Schemas -->
+<Fragment set:html={`
+  <script type="application/ld+json">${JSON.stringify(organizationJsonLd)}</script>
+  <script type="application/ld+json">${JSON.stringify(serviceJsonLd)}</script>
+  <script type="application/ld+json">${JSON.stringify(breadcrumbJsonLd)}</script>
+  <script type="application/ld+json">${JSON.stringify(faqJsonLd)}</script>
+`} />

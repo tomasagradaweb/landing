@@ -1,23 +1,26 @@
 ---
 import Footer from '@components/Footer.astro';
+import SEO from '@components/SEO.astro';  // Importa el componente SEO
 import '@styles/global.css';
 import WhatsAppButton from '@components/WhatsAppButton.astro';
 
-export interface LayoutProps {
+interface Props {
   title: string;
   description: string;
-  navigation: string[];
+  image?: string;
+  keywords?: string;
+  author?: string;
+  themeColor?: string;
 }
 
-const { title, description } = Astro.props as LayoutProps;
+const props = Astro.props;
 ---
 
 <html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
+    <SEO {...props} />  <!-- Usa el componente SEO pasándole todas las props -->
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
