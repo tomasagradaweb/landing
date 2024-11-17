@@ -15,14 +15,14 @@ const bannerItems = [
     <div class="marquee-content">
       {bannerItems.map((item) => (
         <>
-          <h4 class="heading4 text-white uppercase px-[60px] inline-block">{item}</h4>
+          <h4 class="heading4 text-white uppercase px-[60px] inline-block font-montserrat">{item}</h4>
           <Image src={favIcon} width={70} height={70} alt="fav-white" class="w-[56px] inline-block" />
         </>
       ))}
       {/* Duplicamos el contenido para hacer el scroll infinito más suave */}
       {bannerItems.map((item) => (
         <>
-          <h4 class="heading4 text-white uppercase px-[60px] inline-block">{item}</h4>
+          <h4 class="heading4 text-white uppercase px-[60px] inline-block font-montserrat">{item}</h4>
           <Image src={favIcon} width={70} height={70} alt="fav-white" class="w-[56px] inline-block" />
         </>
       ))}

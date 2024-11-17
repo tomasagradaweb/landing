@@ -13,8 +13,8 @@ import ContactForm from '@components/ContactFormModal.astro';
 ---
 
 <section class="container mx-auto px-4 py-24">
-  <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Preguntas frecuentes</h2>
-  <p class="text-gray-600 text-center mb-16 max-w-2xl mx-auto">
+  <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 font-montserrat">Preguntas frecuentes</h2>
+  <p class="text-gray-600 text-center mb-16 max-w-2xl mx-auto font-roboto">
     Resolvemos tus dudas sobre el desarrollo de tu tienda en Shopify
   </p>
   
@@ -25,7 +25,7 @@ import ContactForm from '@components/ContactFormModal.astro';
           class="group border-b border-gray-200"
         >
           <summary class="flex justify-between items-center py-6 cursor-pointer">
-            <span class="text-lg font-medium text-gray-900 pr-6">{faq.question}</span>
+            <span class="text-lg font-medium text-gray-900 pr-6 font-roboto">{faq.question}</span>
             <span class="flex-shrink-0 ml-1.5 p-1.5 text-gray-900 hover:bg-gray-100 rounded-full">
               <svg
                 class="w-5 h-5 transition-transform duration-300 group-open:rotate-180"
@@ -53,7 +53,7 @@ import ContactForm from '@components/ContactFormModal.astro';
   <div class="block text-center mt-12">
     <ContactForm 
         buttonText="RESERVA TU SESIÓN GRATUITA" 
-        buttonClass="bg-[#96BF48] text-white px-6 py-3 rounded hover:bg-[#96BF48]/80"
+        buttonClass="bg-[#96BF48] text-white px-6 py-3 rounded hover:bg-[#96BF48]/80 font-roboto"
         />
   </div>
 </section>
