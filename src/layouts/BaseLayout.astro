@@ -1,6 +1,7 @@
 ---
 import Footer from '@components/Footer.astro';
 import '@styles/global.css';
+import WhatsAppButton from '@components/WhatsAppButton.astro';
 
 export interface LayoutProps {
   title: string;
@@ -23,5 +24,11 @@ const { title, description } = Astro.props as LayoutProps;
       <slot />
     </main>
     <Footer />
+    <WhatsAppButton 
+      number="34612345678"
+      position="bottom-right"
+      pulseAnimation={true}
+      showOnMobile={true}
+    />
   </body>
 </html>

@@ -1,0 +1,313 @@
+---
+interface Props {
+  number?: string;
+  position?: 'bottom-right' | 'bottom-left';
+  showOnMobile?: boolean;
+  pulseAnimation?: boolean;
+}
+
+const predefinedMessages = [
+  {
+    text: "Quiero una consultoría GRATIS",
+    message: "¡Hola! Me gustaría agendar una consultoría gratuita para mi proyecto de Shopify"
+  },
+  {
+    text: "Quiero crear mi ecommerce",
+    message: "¡Hola! Me interesa crear mi tienda online con Shopify. ¿Podemos hablar sobre las opciones?"
+  },
+  {
+    text: "Quiero más información sin compromiso",
+    message: "¡Hola! Me gustaría recibir más información sobre sus servicios de Shopify"
+  }
+];
+
+const {
+  number = "", // Dejar vacío para que lo rellenes tú
+  position = "bottom-right",
+  showOnMobile = true,
+  pulseAnimation = true,
+} = Astro.props;
+
+const positionClasses = {
+  'bottom-right': 'bottom-6 right-6',
+  'bottom-left': 'bottom-6 left-6'
+};
+---
+
+<div class={`
+  fixed ${positionClasses[position]} z-50 
+  ${!showOnMobile ? 'hidden md:block' : ''}
+  flex flex-col items-end
+  gap-3
+`} 
+  id="whatsapp-container"
+>
+  <!-- Dialog Box -->
+  <div
+    id="whatsapp-dialog"
+    class="hidden flex-col gap-3 bg-white rounded-2xl shadow-xl p-4 max-w-[320px] transform transition-all duration-300 scale-95 opacity-0"
+  >
+    <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+      <div class="flex items-center gap-2">
+        <div class="rounded-full bg-black p-2 w-10 h-10 flex items-center justify-center">
+          <span class="text-white font-bold text-sm">HDTN</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-semibold text-gray-800">Highdatanet</span>
+          <div class="flex items-center gap-1">
+            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+            <span class="text-xs text-green-600">En línea</span>
+          </div>
+        </div>
+      </div>
+      <button 
+        id="close-dialog"
+        class="text-gray-400 hover:text-gray-600 transition-colors"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Typing Indicator -->
+    <div class="flex flex-col gap-2 animate-fade-in" id="typing-container">
+      <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg max-w-[85%]">
+        <div class="typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Welcome Message -->
+    <div class="hidden flex-col gap-2" id="welcome-message">
+      <div class="flex flex-col gap-2 p-3 bg-gray-50 rounded-lg max-w-[85%]">
+        <p class="text-sm text-gray-700">¡Hola! 👋 Estamos aquí para ayudarte con tu proyecto Shopify.</p>
+      </div>
+    </div>
+    
+    <!-- Options -->
+    <div class="hidden flex-col gap-2" id="options-container">
+      {predefinedMessages.map((item) => (
+        <a
+          href={`https://wa.me/${number}?text=${encodeURIComponent(item.message)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 p-3 rounded-xl hover:bg-gray-50 text-gray-600 hover:text-gray-900 transition-colors border border-gray-100 hover:border-gray-200 text-sm"
+        >
+          <span class="text-[#25D366]">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm4.293 7.707-5.293 5.293-2.293-2.293a.999.999 0 1 0-1.414 1.414l3 3a.997.997 0 0 0 1.414 0l6-6a.999.999 0 1 0-1.414-1.414z"/>
+            </svg>
+          </span>
+          {item.text}
+          <svg class="w-4 h-4 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </a>
+      ))}
+    </div>
+
+    <div class="text-xs text-gray-500 text-center">
+      Powered by Highdatanet
+    </div>
+  </div>
+
+  <!-- WhatsApp Button -->
+  <button
+    id="whatsapp-button"
+    class="bg-[#25D366] hover:bg-[#1EA952] text-white p-4 rounded-full shadow-lg transition-all duration-300 relative group"
+    aria-label="Contactar por WhatsApp"
+  >
+    {pulseAnimation && (
+      <span class="absolute inset-0 rounded-full opacity-75 animate-ping bg-[#25D366]"></span>
+    )}
+    <svg
+      class="w-6 h-6 group-hover:scale-110 transition-transform duration-300"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+  let isAnimating = false;
+
+  const showDialogContent = () => {
+    const typingContainer = document.getElementById('typing-container');
+    const welcomeMessage = document.getElementById('welcome-message');
+    const optionsContainer = document.getElementById('options-container');
+
+    // Show typing indicator for 1.5 seconds
+    setTimeout(() => {
+      typingContainer?.classList.remove('animate-fade-in');
+      typingContainer?.classList.add('animate-fade-out');
+
+      // Hide typing indicator and show welcome message
+      setTimeout(() => {
+        typingContainer?.classList.add('hidden');
+        welcomeMessage?.classList.remove('hidden');
+        welcomeMessage?.classList.add('flex', 'animate-fade-in');
+
+        // Show options after welcome message
+        setTimeout(() => {
+          optionsContainer?.classList.remove('hidden');
+          optionsContainer?.classList.add('flex', 'animate-fade-in');
+        }, 500);
+      }, 300);
+    }, 1500);
+  };
+
+  const toggleDialog = () => {
+    if (isAnimating) return;
+    isAnimating = true;
+
+    const dialog = document.getElementById('whatsapp-dialog');
+    const typingContainer = document.getElementById('typing-container');
+    const welcomeMessage = document.getElementById('welcome-message');
+    const optionsContainer = document.getElementById('options-container');
+    
+    const isHidden = dialog?.classList.contains('hidden');
+    
+    if (dialog) {
+      if (isHidden) {
+        // Reset state
+        typingContainer?.classList.remove('hidden', 'animate-fade-out');
+        typingContainer?.classList.add('animate-fade-in');
+        welcomeMessage?.classList.add('hidden');
+        welcomeMessage?.classList.remove('flex', 'animate-fade-in');
+        optionsContainer?.classList.add('hidden');
+        optionsContainer?.classList.remove('flex', 'animate-fade-in');
+
+        // Show dialog
+        dialog.classList.remove('hidden');
+        dialog.classList.add('flex');
+        setTimeout(() => {
+          dialog.classList.remove('scale-95', 'opacity-0');
+          dialog.classList.add('scale-100', 'opacity-100');
+          
+          // Start content animation sequence
+          showDialogContent();
+          isAnimating = false;
+        }, 10);
+      } else {
+        dialog.classList.remove('scale-100', 'opacity-100');
+        dialog.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+          dialog.classList.remove('flex');
+          dialog.classList.add('hidden');
+          isAnimating = false;
+        }, 300);
+      }
+    }
+  };
+
+  // Close dialog when clicking outside
+  document.addEventListener('click', (event) => {
+    const container = document.getElementById('whatsapp-container');
+    const dialog = document.getElementById('whatsapp-dialog');
+    
+    if (container && dialog && !dialog.classList.contains('hidden')) {
+      const isClickOutside = !container.contains(event.target as Node);
+      if (isClickOutside) {
+        toggleDialog();
+      }
+    }
+  });
+
+  const setupEventListeners = () => {
+    document.getElementById('whatsapp-button')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleDialog();
+    });
+
+    document.getElementById('close-dialog')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleDialog();
+    });
+  };
+
+  // Initial setup
+  setupEventListeners();
+
+  // Setup for Astro page transitions
+  document.addEventListener('astro:page-load', setupEventListeners);
+</script>
+
+<style>
+  .typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: 4px 8px;
+  }
+
+  .typing-indicator span {
+    width: 8px;
+    height: 8px;
+    background-color: #9ca3af;
+    border-radius: 50%;
+    animation: bounce 1.5s infinite;
+  }
+
+  .typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-4px);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out forwards;
+  }
+
+  .animate-fade-out {
+    animation: fade-out 0.3s ease-out forwards;
+  }
+
+  #whatsapp-dialog {
+    filter: drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
+  }
+
+  @media (max-width: 640px) {
+    #whatsapp-dialog {
+      width: calc(100vw - 2rem);
+      max-width: 320px;
+    }
+  }
+</style>
