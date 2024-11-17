@@ -1,11 +1,9 @@
 import { defineConfig } from 'astro/config';
-import node from '@astrojs/node';
+import vercel from '@astrojs/vercel/static';
 
 export default defineConfig({
-  output: 'server',
-  adapter: node({
-    mode: 'standalone', 
-  }),
+  output: 'static',
+  adapter: vercel(),
   vite: {
     ssr: {
       noExternal: ['nodemailer'], 
