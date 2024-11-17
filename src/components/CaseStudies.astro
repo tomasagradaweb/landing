@@ -45,7 +45,7 @@ const sections: Section[] = (caseStudiesData as CaseStudiesData).sections.map(se
 
 <div>
     {
-        sections.map(({ id, title, description, image, position }) => (
+        sections.map(({ title, description, image, position }) => (
             <div class="relative w-full h-[600px] overflow-hidden group">
                 <Image
                     src={image}
