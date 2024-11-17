@@ -1,0 +1,56 @@
+{
+    "faqs": [
+      {
+        "id": 1,
+        "question": "¿Hacéis migraciones de Woocommerce/PrestaShop/Wix... a Shopify?",
+        "answer": "Sí, realizamos migraciones completas desde plataformas como WooCommerce, PrestaShop, Magento y Wix a Shopify. Nos encargamos de transferir de manera segura todos tus datos esenciales, optimizando y configurando tu nueva tienda para mejorar la experiencia del usuario y maximizar las ventas."
+      },
+      {
+        "id": 2,
+        "question": "No conozco Shopify, ¿qué tengo que aprender?",
+        "answer": "No te preocupes, Shopify es una plataforma muy intuitiva y fácil de usar, diseñada para personas sin conocimientos de programación. Además, en HighDataNet te proporcionaremos una formación completa para que puedas gestionar tu tienda de manera eficaz y autónoma."
+      },
+      {
+        "id": 3,
+        "question": "¿Cuál es el proceso de desarrollo de una tienda Shopify?",
+        "answer": "Nuestro proceso comienza con una consultoría inicial para entender tus necesidades y objetivos. Luego, realizamos un análisis y planificación detallados, seguidos por el diseño personalizado y el desarrollo técnico. Tras una fase de pruebas rigurosas, lanzamos la tienda y proporcionamos soporte post-lanzamiento para asegurar su correcto funcionamiento y éxito."
+      },
+      {
+        "id": 4,
+        "question": "¿Cuánto tiempo tarda en completarse el desarrollo de una tienda Shopify?",
+        "answer": "El tiempo de desarrollo varía según la complejidad y los requisitos específicos del proyecto. En general, el proceso puede tardar entre 4 a 10 semanas. Durante la consultoría inicial, proporcionaremos un cronograma más preciso basado en tus necesidades."
+      },
+      {
+        "id": 5,
+        "question": "¿Qué costes están asociados con el diseño y desarrollo de una tienda Shopify?",
+        "answer": "Aparte del coste de nuestros servicios, en función de las necesidades de tu tienda, es posible que necesites ciertas aplicaciones (plugins) de pago, así como la cuota de Shopify (anual o mensual). Todos estos costes se plantearán en la consultoría inicial. El plan base de Shopify empieza en…"
+      },
+      {
+        "id": 6,
+        "question": "¿Mi tienda estará preparada en otros idiomas, países y moneda?",
+        "answer": "Si tu objetivo es vender en más países, idiomas o monedas, sí."
+      },
+      {
+        "id": 7,
+        "question": "Necesito hacer integraciones personalizadas, ¿es posible?",
+        "answer": "Realizamos integraciones con una amplia variedad de herramientas, incluyendo plataformas de email marketing como MailChimp, CRMs y ERPs como Holded y Salesforce, herramientas de análisis, así como soluciones de inteligencia artificial y chatbots."
+      }
+    ],
+    "benefits": [
+      {
+        "id": 1,
+        "title": "Creamos tu tienda a medida",
+        "description": "Haz que tu tienda destaque sobre la competencia con un diseño personalizado que te convierta en la opción preferida por tu cliente."
+      },
+      {
+        "id": 2,
+        "title": "Expertos en convertir ideas únicas en tiendas rentables",
+        "description": "Diseñamos tu e-commerce para optimizar las métricas de tu negocio, aumentar las conversiones y fidelizar a tus clientes."
+      },
+      {
+        "id": 3,
+        "title": "Tu negocio en la palma de tu mano",
+        "description": "Gestiona fácilmente tu e-commerce desde tu móvil y controla tu negocio sin depender de agencias ni programadores externos."
+      }
+    ]
+  }

@@ -1,0 +1,23 @@
+{
+    "header": {
+        "title": "Landing page con Astro",
+        "navigation": ["Inicio", "Acerca de", "Contacto"]
+    },
+    "hero": {
+        "title": "Bienvenido a mi landing page",
+        "subtitle": "Esta es una landing page con Astro",
+        "ctaText": "¡Comienza ahora!"
+    },
+    "features": [
+        {
+            "title": "Característica 1",
+            "description": "Descripción de la característica 1"
+        }
+    ],
+    "testimonials": [
+        {
+            "name": "Cliente 1",
+            "testimonial": "Testimonio del cliente 1"
+        }
+    ]
+}

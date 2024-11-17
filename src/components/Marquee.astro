@@ -1,0 +1,76 @@
+---
+import favIcon from '@assets/home/expertos-en-shopify.png';
+import { Image } from 'astro:assets';
+const bannerItems = [
+  "Creamos tu tienda a medida en Shopify",
+  "Expertos en desarrollo Shopify",
+  "Agencia de diseño web en Shopify",
+  "Multiplica tus ventas con nuestros expertos de shopify",
+  "Agencia Shopify partner",
+  "Especialistas en tiendas online en Shopify"
+];
+---
+<section class="banner-block bg-[#96BF48] pt-5 pb-3 overflow-hidden">
+  <div class="marquee">
+    <div class="marquee-content">
+      {bannerItems.map((item) => (
+        <>
+          <h4 class="heading4 text-white uppercase px-[60px] inline-block">{item}</h4>
+          <Image src={favIcon} width={70} height={70} alt="fav-white" class="w-[56px] inline-block" />
+        </>
+      ))}
+      {/* Duplicamos el contenido para hacer el scroll infinito más suave */}
+      {bannerItems.map((item) => (
+        <>
+          <h4 class="heading4 text-white uppercase px-[60px] inline-block">{item}</h4>
+          <Image src={favIcon} width={70} height={70} alt="fav-white" class="w-[56px] inline-block" />
+        </>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .marquee-content {
+    display: flex;
+    animation: marquee var(--duration, 20s) linear infinite;
+    will-change: transform;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .heading4 {
+    font-size: 1rem;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+</style>
+
+<script>
+  function adjustMarqueeSpeed() {
+    const marquee = document.querySelector('.marquee-content') as HTMLElement;
+    if (marquee) {
+      const marqueeWidth = marquee.scrollWidth / 2; // Dividimos por 2 porque duplicamos el contenido
+      const duration = Math.max(marqueeWidth / 50, 10); // Establecemos un mínimo de 10s
+      marquee.style.setProperty('--duration', `${duration}s`);
+    }
+  }
+
+  // Ejecuta la función cuando el contenido esté cargado
+  document.addEventListener('astro:page-load', adjustMarqueeSpeed);
+  // Ajusta la velocidad cuando cambia el tamaño de la ventana
+  window.addEventListener('resize', adjustMarqueeSpeed);
+</script>

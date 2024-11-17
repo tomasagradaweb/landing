@@ -1,0 +1,39 @@
+{
+    "sections": [
+      {
+        "id": 1,
+        "title": "Emlifemarket",
+        "description": "Primera descripción del contenido. Puedes agregar todo el texto que necesites aquí y se mantendrá dentro del contenedor blanco semi-transparente.",
+        "image": "expertos-en-shopify-caso-de-exito-1.webp",
+        "position": "right"
+      },
+      {
+        "id": 2,
+        "title": "Tornasol",
+        "description": "Segunda descripción del contenido. Este contenedor está posicionado a la izquierda de la imagen de fondo.",
+        "image": "diseno-web-tornasol.webp",
+        "position": "left"
+      },
+      {
+        "id": 3,
+        "title": "Archywelfare",
+        "description": "Primera descripción del contenido. Puedes agregar todo el texto que necesites aquí y se mantendrá dentro del contenedor blanco semi-transparente.",
+        "image": "expertos-en-shopify-para-tienda-online.webp",
+        "position": "right"
+      },
+      {
+        "id": 4,
+        "title": "Matew",
+        "description": "Segunda descripción del contenido. Este contenedor está posicionado a la izquierda de la imagen de fondo.",
+        "image": "tienda-online-en-shopify.webp",
+        "position": "left"
+      },
+      {
+        "id": 5,
+        "title": "AmeliePrager",
+        "description": "Primera descripción del contenido. Puedes agregar todo el texto que necesites aquí y se mantendrá dentro del contenedor blanco semi-transparente.",
+        "image": "ecommerce-en-shopify.webp",
+        "position": "right"
+      }
+    ]
+  }

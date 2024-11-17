@@ -1,0 +1,42 @@
+---
+// SeccionImagenResponsive.astro
+import { Image } from 'astro:assets';
+import shopifyImage from '@assets/home/agencia-especializada-shopify.jpg';
+import shopifyPartner from '@assets/home/shopify-partner.webp';
+import Logo from '@assets/logo.svg';
+---
+
+<section class="relative h-screen bg-cover bg-center bg-no-repeat" style={`background-image: url(${shopifyImage.src});`}>
+  {/* Contenedor de fondo oscuro que envuelve todo el contenido */}
+  <div class="absolute inset-0 bg-black bg-opacity-60 flex flex-col">
+
+    {/* Header con logo responsive */}
+    <header class="w-full flex justify-center sm:justify-start sm:pl-8 pt-4">
+      <Image 
+        src={Logo}
+        alt="Expertos en shopify"
+        width={300}
+        height={200}
+        class="mt-4"
+      />
+    </header>
+
+    {/* Sección de contenido principal */}
+    <div class="flex flex-col justify-center h-full px-6 sm:pl-10">
+      <h1 class="text-5xl sm:text-4xl md:text-5xl font-bold max-w-2xl text-white">
+        LIBERA EL POTENCIAL DE TU E-COMMERCE CON SHOPIFY
+      </h1>
+      <p class="text-lg sm:text-xl max-w-2xl pt-2 text-gray-200">
+        Aumenta las ventas de tu tienda online creando experiencias personalizadas para tu cliente
+      </p>
+      {/* Imagen de Shopify Partner */}
+      <Image 
+        src={shopifyPartner}
+        alt="Partner en shopify"
+        width={300}
+        height={200}
+        class="mt-4"
+      />
+    </div>
+  </div>
+</section>

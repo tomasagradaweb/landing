@@ -1,0 +1,263 @@
+---
+// Generar un ID único usando timestamp y número aleatorio
+const uniqueId = `modal-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+const shopifyServices = [
+  "Shopify Plus",
+  "Diseño y creación",
+  "Migrar tu tienda a Shopify",
+  "Desarrollo de apps e integraciones",
+  "Headless",
+  "Mantenimiento"
+];
+
+const buttonData = {
+  title: "Programa una reunión gratuita de 30 minutos",
+  subtitle: "Analizaremos tu proyecto y te daremos las mejores soluciones"
+};
+
+interface Props {
+  buttonText?: string;
+  buttonClass?: string;
+}
+
+const { 
+  buttonText = "Contactar",
+  buttonClass = "bg-black text-white px-8 py-4 rounded-lg hover:bg-gray-800 transition-all text-lg font-medium"
+} = Astro.props;
+---
+
+<button
+  data-modal-open={uniqueId}
+  class={buttonClass}
+>
+  {buttonText}
+</button>
+
+<div
+  id={uniqueId}
+  class="fixed inset-0 bg-black/50 z-50 hidden overflow-y-auto"
+>
+  <div class="min-h-screen px-4 flex items-center justify-center">
+    <div class="bg-white w-full max-w-3xl p-8 rounded-2xl relative my-8">
+      <button
+        data-modal-close={uniqueId}
+        class="absolute top-4 right-4 text-gray-400 hover:text-gray-500"
+      >
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <form class="space-y-12">
+        <h2 class="text-4xl font-black text-center mb-16">
+          CUÉNTANOS SOBRE TU NEGOCIO
+        </h2>
+
+        <div class="space-y-8">
+          <div class="border-b border-gray-300 focus-within:border-black transition-all">
+            <input
+              type="text"
+              name="businessName"
+              placeholder="Nombre de tu negocio"
+              required
+              class="w-full px-0 py-4 border-none bg-transparent placeholder-gray-400 focus:outline-none focus:ring-0"
+            />
+          </div>
+
+          <div class="border-b border-gray-300 focus-within:border-black transition-all">
+            <input
+              type="url"
+              name="website"
+              placeholder="Sitio web (opcional)"
+              class="w-full px-0 py-4 border-none bg-transparent placeholder-gray-400 focus:outline-none focus:ring-0"
+            />
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <p class="text-lg">Dinos en que servicios de Shopify estas interesad@:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {shopifyServices.map((service) => (
+              <label class="border border-gray-300 px-4 py-3 cursor-pointer hover:bg-black hover:text-white transition-colors">
+                <input
+                  type="checkbox"
+                  name="services"
+                  value={service}
+                  class="sr-only peer"
+                />
+                <span class="text-sm font-medium">{service}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <p class="text-lg">¿Cómo podemos ayudarte?</p>
+          <div class="border-b border-gray-300 focus-within:border-black transition-all">
+            <textarea
+              name="description"
+              rows="4"
+              class="w-full px-0 py-4 border-none bg-transparent placeholder-gray-400 focus:outline-none focus:ring-0 resize-none"
+            ></textarea>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-3xl font-black text-center mb-8">
+            CUÉNTANOS SOBRE TI
+          </h3>
+          <div class="space-y-8">
+            <div class="border-b border-gray-300 focus-within:border-black transition-all">
+              <input
+                type="text"
+                name="name"
+                placeholder="Nombre"
+                required
+                class="w-full px-0 py-4 border-none bg-transparent placeholder-gray-400 focus:outline-none focus:ring-0"
+              />
+            </div>
+            
+            <div class="border-b border-gray-300 focus-within:border-black transition-all">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+                class="w-full px-0 py-4 border-none bg-transparent placeholder-gray-400 focus:outline-none focus:ring-0"
+              />
+            </div>
+
+            <div class="border-b border-gray-300 focus-within:border-black transition-all">
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Teléfono"
+                class="w-full px-0 py-4 border-none bg-transparent placeholder-gray-400 focus:outline-none focus:ring-0"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-8 space-y-4">
+          <div class="text-center space-y-2">
+            <h4 class="text-xl font-bold">{buttonData.title}</h4>
+            <p class="text-gray-500">{buttonData.subtitle}</p>
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-black text-white py-4 px-8 text-lg font-medium hover:bg-gray-800 transition-colors"
+          >
+            Programar una reunión
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  function setupModals() {
+    // Manejador para abrir modales
+    document.querySelectorAll('[data-modal-open]').forEach(button => {
+      button.addEventListener('click', () => {
+        const modalId = button.getAttribute('data-modal-open');
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    });
+
+    // Manejador para cerrar modales
+    document.querySelectorAll('[data-modal-close]').forEach(button => {
+      button.addEventListener('click', () => {
+        const modalId = button.getAttribute('data-modal-close');
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.classList.add('hidden');
+          document.body.style.overflow = 'auto';
+        }
+      });
+    });
+
+    // Click fuera para cerrar
+    document.querySelectorAll('[id^="modal-"]').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.add('hidden');
+          document.body.style.overflow = 'auto';
+        }
+      });
+    });
+
+    // Tecla ESC para cerrar
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const openModal = document.querySelector('[id^="modal-"]:not(.hidden)');
+        if (openModal) {
+          openModal.classList.add('hidden');
+          document.body.style.overflow = 'auto';
+        }
+      }
+    });
+  }
+
+  // Inicializar cuando el DOM esté listo
+  document.addEventListener('DOMContentLoaded', setupModals);
+  
+  // Soporte para Astro View Transitions
+  document.addEventListener('astro:page-load', setupModals);
+
+  // Manejo del formulario
+  document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
+
+      try {
+        console.log('Datos del formulario:', data);
+        e.target.reset();
+        const modal = e.target.closest('[id^="modal-"]');
+        if (modal) {
+          modal.classList.add('hidden');
+          document.body.style.overflow = 'auto';
+        }
+        alert('Tu solicitud ha sido enviada. Nos pondremos en contacto contigo pronto.');
+      } catch (error) {
+        console.error('Error al enviar el formulario:', error);
+        alert('Error al enviar el mensaje. Por favor, inténtalo de nuevo.');
+      }
+    });
+  });
+</script>
+
+<style>
+  /* Estilo para los checkboxes cuando están seleccionados */
+  input[type="checkbox"]:checked + span {
+    color: white;
+  }
+
+  label:has(input[type="checkbox"]:checked) {
+    background-color: black;
+    border-color: black;
+  }
+
+  /* Animaciones suaves */
+  input, textarea {
+    transition: all 0.2s ease-in-out;
+  }
+
+  /* Estilo para el autofill */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+</style>

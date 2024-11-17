@@ -1,0 +1,81 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import type { CaseStudiesData } from '../types/CaseStudies';
+import caseStudiesData from '../data/CaseStudies.json';
+
+interface Section {
+    id: number;
+    title: string;
+    description: string;
+    image: ImageMetadata;
+    position: 'left' | 'right';
+}
+
+// Cambiamos la ruta para que coincida con tu estructura de carpetas
+const images = import.meta.glob<{ default: ImageMetadata }>('../assets/casestudies/*.{jpeg,jpg,png,gif,webp}', {
+    eager: true
+});
+
+const sections: Section[] = (caseStudiesData as CaseStudiesData).sections.map(section => {
+    // Extraer solo el nombre del archivo de la ruta completa
+    const filename = section.image;
+    // Buscar la imagen en todas las rutas disponibles
+    const imagePath = Object.keys(images).find(path => path.endsWith(filename));
+    
+    if (!imagePath || !images[imagePath]) {
+        throw new Error(`Image not found: ${filename}`);
+    }
+
+    return {
+        ...section,
+        image: images[imagePath].default,
+        position: section.position as 'left' | 'right'
+    };
+});
+---
+
+<div class="bg-[#15141b] py-24">
+    <h3 class="text-3xl md:text-4xl font-bold text-center text-white relative">
+        <p class="text-lg font-light pb-5">Nuestros trabajos</p>
+        <span class="relative z-10">Multiplica tus ventas en menos tiempo con Shopify</span>
+        <p class="text-3xl font-light pt-2">La herramienta de e-commerce Nº 1 en 2024</p>
+    </h3>
+</div>
+
+<div>
+    {
+        sections.map(({ id, title, description, image, position }) => (
+            <div class="relative w-full h-[600px] overflow-hidden group">
+                <Image
+                    src={image}
+                    alt={title}
+                    width={1920}
+                    height={1080}
+                    class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                    quality={80}
+                />
+                <div class="absolute inset-0 bg-gradient-to-r from-black/30 to-black/10"></div>
+                
+                <div 
+                    class={`absolute top-1/2 -translate-y-1/2 ${
+                        position === 'left' 
+                            ? 'left-8 lg:left-16' 
+                            : 'right-8 lg:right-16'
+                    } max-w-md z-10`}
+                >
+                    <div class="bg-white bg-opacity-90 rounded-lg p-6 shadow-lg backdrop-blur-sm transition-transform duration-500 ease-in-out hover:-translate-y-1">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-3">
+                            {title}
+                        </h2>
+                        <p class="text-gray-600">
+                            {description}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        ))
+    }
+</div>

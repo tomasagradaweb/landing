@@ -1,0 +1,83 @@
+---
+import { Image } from 'astro:assets';
+
+interface TeamMember {
+  name: string;
+  position: string;
+  image: ImageMetadata;
+  description: string;  // Añadido para el texto del hover
+}
+
+import member1 from '../assets/team/adrian-especialista-en-shopify.webp';
+import member2 from '../assets/team/adrian-especialista-en-shopify.webp';
+
+const teamMembers: TeamMember[] = [
+  {
+    name: "Adrián Garzón",
+    position: "CEO & Co-Founder",
+    image: member1,
+    description: "Ingeniero de Telecomunicaciones y analista de datos, llevo desde 2017 dedicándome al ecommerce, ayudando a mis clientes a escalar sus tiendas, hasta más de 40.000€ mensuales de facturación."
+  },
+  {
+    name: "Tomás Carmona",
+    position: "CTO & Co-Founder",
+    image: member2,
+    description: "Con 7 años impulsando soluciones tecnológicas, mi especialidad es construir sistemas escalables, liderar equipos técnicos y desarrollar herramientas que optimizan el ecommerce."
+  }
+];
+---
+
+<section class="container mx-auto px-4 py-16">
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
+        Shopify experts | Más que ecommerce.
+    </h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    {
+      teamMembers.map((member) => (
+        <div class="group relative block overflow-hidden rounded-3xl bg-white shadow-lg">
+          <article class="relative">
+            <div class="aspect-[4/3] overflow-hidden">
+              <Image
+                src={member.image}
+                alt={member.name}
+                class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                width={800}
+                height={600}
+              />
+            </div>
+            {/* Info base */}
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 transition-all duration-300 group-hover:translate-y-full">
+              <h3 class="text-2xl font-bold text-white mb-1">
+                {member.name}
+              </h3>
+              <p class="text-white/90">
+                {member.position}
+              </p>
+            </div>
+            {/* Panel con descripción que aparece al hover */}
+            <div class="absolute inset-0 bg-black/40 p-6 translate-y-full transition-transform duration-300 ease-in-out group-hover:translate-y-0 flex flex-col justify-end">
+              <h3 class="text-2xl font-bold text-white mb-1">
+                {member.name}
+              </h3>
+              <p class="text-white/90 mb-4">
+                {member.position}
+              </p>
+              <p class="text-white/90 leading-relaxed">
+                {member.description}
+              </p>
+            </div>
+          </article>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  /* Asegura una transición suave para todos los elementos */
+  .group * {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+</style>
