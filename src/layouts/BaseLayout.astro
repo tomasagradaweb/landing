@@ -2,6 +2,7 @@
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
 import '@styles/global.css';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export interface LayoutProps {
   title: string;
@@ -20,6 +21,7 @@ const { title, description, navigation } = Astro.props as LayoutProps;
     <meta name="description" content={description} />
   </head>
   <body>
+    <SpeedInsights/>
     <main>
       <slot />
     </main>
