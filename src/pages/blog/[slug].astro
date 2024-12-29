@@ -1,0 +1,98 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import landingData from '../../data/landingData.json';
+import fetchApi from '../../lib/strapi';
+import type Blog from '../../interfaces/blog';
+import { formatDate } from '../../utils/dateFormatter';
+
+const { slug } = Astro.params;
+
+interface BlogResponse {
+ data: Blog[];
+ meta: {
+   pagination: {
+     page: number;
+     pageSize: number;
+     pageCount: number;
+     total: number;
+   };
+ };
+}
+
+let blog: Blog;
+
+try {
+ const response = await fetchApi<BlogResponse>({
+   endpoint: 'blogs',
+   query: {
+     'filters[slug][$eq]': slug || '',
+     'populate': '*'
+   },
+ });
+ 
+ blog = response.data[0];
+
+ if (!blog) {
+   return Astro.redirect('/404');
+ }
+
+} catch (error) {
+ console.error("Error:", error);
+ return Astro.redirect('/404');
+}
+
+function extractText(description: Blog['Description']): string {
+  return description
+    ?.filter((desc) => desc.type === 'paragraph')
+    .map((desc) =>
+      desc.children.map((child) => child.text).join('')
+    )
+    .join('\n\n') || '';
+}
+
+const blogContent = extractText(blog.Description);
+---
+
+<BaseLayout title={`${blog.Title} | ${landingData.header.title}`} description={blogContent.slice(0, 160)}>
+  <main class="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <article class="prose prose-lg prose-gray max-w-none">
+      <header class="mb-12 text-center">
+        <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4 font-roboto">{blog.Title}</h1>
+        <p class="text-gray-500 text-sm">
+          Publicado el <time datetime={blog.publishedAt}>{formatDate(blog.publishedAt)}</time>
+        </p>
+        <a href="/blog" class="text-black  hover:text-green-800 transition-colors duration-300 flex items-center font-montserrat">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+            </svg>
+            Volver al blog
+          </a>
+      </header>
+
+      {blog.Cover?.url && (
+        <img 
+          src={`${import.meta.env.STRAPI_URL}${blog.Cover.url}`} 
+          alt={blog.Title}
+          class="w-full aspect-video object-cover rounded-lg shadow-md mb-12"
+        />
+      )}
+
+      <div class="text-gray-700 leading-relaxed space-y-6 font-montserrat">
+        {blogContent.split('\n\n').map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+      </div>
+
+      <footer class="mt-12 pt-6 border-t border-gray-200">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <a href="/blog" class="text-black  hover:text-green-800 transition-colors duration-300 flex items-center font-montserrat">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+            </svg>
+            Volver al blog
+          </a>
+        </div>
+      </footer>
+    </article>
+  </main>
+</BaseLayout>

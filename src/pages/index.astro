@@ -8,10 +8,13 @@ import CaseStudies from '@components/CaseStudies.astro';
 import StatsSection from '@components/StatsSection.astro';
 import TeamSection from '@components/TeamSection.astro';
 import FaqSection from '@components/FaqSection.astro';
+import Blog from '@components/Blog.astro';
+import Header from '@components/Header.astro';
 
 ---
 
 <BaseLayout title={landingData.header.title} description={landingData.header.description}>
+  <Header />
   <SectionOne />
   <Marquee />
   <About />
@@ -19,4 +22,5 @@ import FaqSection from '@components/FaqSection.astro';
   <StatsSection />
   <TeamSection />
   <FaqSection />
+  <Blog />
 </BaseLayout>

@@ -1,0 +1,89 @@
+---
+import fetchApi from '../lib/strapi';
+import type Blog from '../interfaces/blog';
+import { formatDate } from '../utils/dateFormatter';
+
+function extractText(description: Blog['Description']): string {
+  return description
+    .filter((desc) => desc.type === 'paragraph')
+    .map((desc) =>
+      desc.children.map((child) => child.text).join('')
+    )
+    .join(' ');
+}
+
+const blogs = await fetchApi<Blog[]>({
+  endpoint: 'blogs?populate=Cover&pagination[limit]=3',
+  wrappedByKey: 'data',
+});
+
+function chunkArray(array: Blog[], size: number) {
+  return Array.from({ length: Math.ceil(array.length / size) }, (v, i) =>
+    array.slice(i * size, i * size + size)
+  );
+}
+
+const blogGroups = chunkArray(blogs, 3);
+---
+
+<section class="py-16 px-4 bg-white">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-5xl font-montserrat font-bold text-gray-900 mb-4 text-center">
+        Mantente al día
+    </h2>
+    <p class="text-xl text-gray-600 font-roboto text-center pb-32">
+        Descubre cómo hacer crecer tu negocio con nuestros consejos de expertos.
+    </p>
+
+    {blogGroups.map((group) => (
+      <div  class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 last:mb-0">
+        {group.map((blog) => {
+          const coverUrl = blog.Cover?.url
+            ? `${import.meta.env.STRAPI_URL}${blog.Cover.url}`
+            : 'https://via.placeholder.com/600x400?text=Sin+Imagen';
+          const descriptionText = extractText(blog.Description) || 'Sin descripción disponible.';
+
+          return (
+            <a href={`/blog/${blog.slug}/`} class="group block">
+              <article class="bg-white border border-gray-200 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-md">
+                <div class="aspect-w-16 aspect-h-9 rounded-t-2xl overflow-hidden">
+                  <img
+                    src={coverUrl}
+                    alt={blog.Title}
+                    class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+                <div class="p-6">
+                  <h3 class="text-xl font-semibold text-gray-800 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300 font-roboto">
+                    {blog.Title}
+                  </h3>
+                  <p class="text-sm text-gray-600 mb-4 line-clamp-3 font-montserrat">
+                    {descriptionText}
+                  </p>
+                  <div class="flex items-center justify-between text-sm text-gray-500">
+                    <span class="bg-gray-100 px-3 py-1 rounded-full text-xs font-roboto">
+                      {formatDate(blog.publishedAt)}
+                    </span>
+                    <span class="flex items-center group-hover:text-blue-600 transition-colors duration-300">
+                      Leer más
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+              </article>
+            </a>
+          );
+        })}
+      </div>
+    ))}
+    <div class=" text-center">
+        <a href="/blog" class="bg-[#96BF48] text-white px-6 py-3 rounded hover:bg-[#96BF48]/80 font-roboto">
+            Ver más artículos
+        </a>
+    </div>
+  </div>
+</section>
+
+

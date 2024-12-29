@@ -1,0 +1,136 @@
+---
+// NavigationMenu.astro
+import { Image } from 'astro:assets';
+import Logo from '@assets/logo-highdatanet.webp';
+
+interface Props {
+  bgcolor?: string;
+}
+
+const { bgcolor = 'transparent' } = Astro.props;
+---
+
+<header 
+  class="w-full fixed top-0 z-50 transition-all duration-300" 
+  id="navbar"
+  style={`background-color: ${bgcolor};`}
+  data-initial-bg={bgcolor}
+>
+  <nav class="container mx-auto px-4">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a href="/" class="flex-shrink-0">
+        <Image 
+          src={Logo}
+          alt="Expertos en Shopify"
+          width={300}
+          height={200}
+          class="mt-4 pb-5 cursor-pointer"
+        />
+      </a>
+
+      <!-- Botón hamburguesa para móvil -->
+      <div class="flex md:hidden">
+        <button
+          type="button"
+          class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-white hover:text-gray-200 hover:bg-gray-800/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+        >
+          <span class="sr-only">Abrir menú principal</span>
+          <svg
+            class="block h-6 w-6"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Menú desktop -->
+      <div class="hidden md:flex md:items-center md:space-x-8">
+        <a
+          href="/"
+          class="text-white hover:bg-[#96BF48] px-3 py-2 text-base font-medium transition-colors duration-200 rounded-md cursor-pointer"
+        >
+          INICIO
+        </a>
+        <a
+          href="/blog"
+          class="text-white hover:bg-[#96BF48] px-3 py-2 text-base font-medium transition-colors duration-200 rounded-md cursor-pointer"
+        >
+          BLOG
+        </a>
+        <a
+          target="_blank"
+          href="https://wa.me/34633464544?text=%C2%A1Hola!%20Me%20gustar%C3%ADa%20agendar%20una%20consultor%C3%ADa%20gratuita%20para%20mi%20proyecto%20de%20Shopify"
+          class="bg-[#96BF48] text-white hover:bg-[#96BF48]/80 px-4 py-2 rounded-md text-base font-medium transition-colors duration-200 cursor-pointer"
+        >
+          SESIÓN GRATUITA
+        </a>
+      </div>
+    </div>
+
+    <!-- Menú móvil -->
+    <div class="hidden md:hidden transition-all duration-200 ease-in-out rounded-lg mt-2" id="mobile-menu">
+      <div class="px-2 pt-2 pb-3 space-y-1">
+        <a
+          href="/"
+          class="text-white hover:bg-[#96BF48] block px-3 py-2 text-base font-medium transition-colors duration-200 rounded-md"
+        >
+          INICIO
+        </a>
+        <a
+          href="/blog"
+          class="text-white hover:bg-[#96BF48] block px-3 py-2 text-base font-medium transition-colors duration-200 rounded-md"
+        >
+          BLOG
+        </a>
+        <a
+          target="_blank"
+          href="https://wa.me/34633464544?text=%C2%A1Hola!%20Me%20gustar%C3%ADa%20agendar%20una%20consultor%C3%ADa%20gratuita%20para%20mi%20proyecto%20de%20Shopify"
+          class="bg-[#96BF48] text-white hover:bg-[#96BF48]/80 block px-4 py-2 rounded-md text-base font-medium transition-colors duration-200"
+        >
+          SESIÓN GRATUITA
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  // Funcionalidad del menú móvil
+  const mobileMenuButton = document.querySelector('.mobile-menu-button');
+  const mobileMenu = document.querySelector('#mobile-menu');
+  const navbar = document.querySelector('#navbar');
+
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+
+  // Funcionalidad del scroll
+  window.addEventListener('scroll', () => {
+    if (!navbar) return;
+    const navbarElement = navbar as HTMLElement;
+
+    if (window.scrollY > 0) {
+      navbarElement.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+      navbarElement.style.backdropFilter = 'blur(8px)';
+    } else {
+      const initialBgColor = navbarElement.getAttribute('data-initial-bg') || 'transparent';
+      navbarElement.style.backgroundColor = initialBgColor;
+      navbarElement.style.backdropFilter = 'none';
+    }
+  });
+</script>

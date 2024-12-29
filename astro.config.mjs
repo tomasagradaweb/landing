@@ -11,7 +11,13 @@ export default defineConfig({
     },
     resolve: {
       alias: {
+        '@components': '/src/components',
+        '@layouts': '/src/layouts',
+        '@data': '/src/data',
+        '@styles': '/src/styles',
         '@assets': '/src/assets',
+        '@interfaces': '/src/interfaces',
+        '@lib': '/src/'
       },
     },
   },
