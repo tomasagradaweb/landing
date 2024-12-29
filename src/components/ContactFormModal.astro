@@ -161,6 +161,8 @@ const {
     document.querySelectorAll('[data-modal-open]').forEach(button => {
       button.addEventListener('click', () => {
         const modalId = button.getAttribute('data-modal-open');
+        if (!modalId) return;
+        
         const modal = document.getElementById(modalId);
         if (modal) {
           modal.classList.remove('hidden');
@@ -172,6 +174,8 @@ const {
     document.querySelectorAll('[data-modal-close]').forEach(button => {
       button.addEventListener('click', () => {
         const modalId = button.getAttribute('data-modal-close');
+        if (!modalId) return;
+        
         const modal = document.getElementById(modalId);
         if (modal) {
           modal.classList.add('hidden');
@@ -205,76 +209,72 @@ const {
 
   document.querySelectorAll('form').forEach(form => {
     form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+      e.preventDefault();
 
-    const form = e.currentTarget as HTMLFormElement;
-    const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-    const originalButtonText = submitButton.textContent || 'Enviar';
+      const form = e.currentTarget as HTMLFormElement;
+      const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      const originalButtonText = submitButton.textContent || 'Enviar';
 
-    try {
-      // Mostrar estado de carga
-      submitButton.textContent = 'Enviando...';
-      submitButton.disabled = true;
+      try {
+        submitButton.textContent = 'Enviando...';
+        submitButton.disabled = true;
 
-      const formData = new FormData(form);
+        const formData = new FormData(form);
 
-      // Convertir FormData a un objeto, manejando múltiples valores
-      interface FormDataObject {
-        [key: string]: FormDataEntryValue | FormDataEntryValue[];
-      }
-
-      const data: FormDataObject = {};
-
-      formData.forEach((value, key) => {
-        if (data[key]) {
-          data[key] = Array.isArray(data[key])
-            ? [...(data[key] as FormDataEntryValue[]), value]
-            : [data[key] as FormDataEntryValue, value];
-        } else {
-          data[key] = value;
+        interface FormDataObject {
+          [key: string]: FormDataEntryValue | FormDataEntryValue[];
         }
-      });
 
-      // Validaciones básicas
-      if (!data.businessName || !data.name || !data.email) {
-        throw new Error('Por favor, completa todos los campos requeridos.');
+        const data: FormDataObject = {};
+
+        formData.forEach((value, key) => {
+          if (data[key]) {
+            if (Array.isArray(data[key])) {
+              (data[key] as FormDataEntryValue[]).push(value);
+            } else {
+              data[key] = [data[key] as FormDataEntryValue, value];
+            }
+          } else {
+            data[key] = value;
+          }
+        });
+
+        if (!data.businessName || !data.name || !data.email) {
+          throw new Error('Por favor, completa todos los campos requeridos.');
+        }
+
+        const response = await fetch('/api/send-contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.message || 'Error al enviar el formulario');
+        }
+
+        form.reset();
+        const modalElement = form.closest('[id^="modal-"]');
+        if (modalElement) {
+          modalElement.classList.add('hidden');
+          document.body.style.overflow = 'auto';
+        }
+
+        alert('¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto.');
+
+      } catch (error) {
+        console.error('Error:', error);
+        alert(error instanceof Error ? error.message : 'Error al enviar el mensaje. Por favor, inténtalo de nuevo.');
+      } finally {
+        submitButton.textContent = originalButtonText;
+        submitButton.disabled = false;
       }
-
-      const response = await fetch('/api/send-contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || 'Error al enviar el formulario');
-      }
-
-      // Éxito
-      form.reset();
-      const modal = form.closest('[id^="modal-"]');
-      if (modal) {
-        modal.classList.add('hidden');
-        document.body.style.overflow = 'auto';
-      }
-
-      alert('¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto.');
-
-    } catch (error) {
-      console.error('Error:', error);
-      alert(error instanceof Error ? error.message : 'Error al enviar el mensaje. Por favor, inténtalo de nuevo.');
-    } finally {
-      // Restaurar el botón
-      submitButton.textContent = originalButtonText;
-      submitButton.disabled = false;
-    }
+    });
   });
-});
-
 </script>
 
 <style>

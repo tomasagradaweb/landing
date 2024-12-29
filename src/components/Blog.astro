@@ -18,7 +18,7 @@ const blogs = await fetchApi<Blog[]>({
 });
 
 function chunkArray(array: Blog[], size: number) {
-  return Array.from({ length: Math.ceil(array.length / size) }, (v, i) =>
+  return Array.from({ length: Math.ceil(array.length / size) }, (_, i) =>
     array.slice(i * size, i * size + size)
   );
 }
