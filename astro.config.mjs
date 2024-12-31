@@ -7,8 +7,8 @@ export default defineConfig({
   adapter: vercel(),
   vite: {
     define: {
-      'import.meta.env.STRAPI_URL': JSON.stringify(process.env.STRAPI_URL),
-      'import.meta.env.STRAPI_API_TOKEN': JSON.stringify(process.env.STRAPI_API_TOKEN)
+      'import.meta.env.STRAPI_URL': `"${process.env.STRAPI_URL}"`,
+      'import.meta.env.STRAPI_API_TOKEN': `"${process.env.STRAPI_API_TOKEN}"`
     },
     ssr: {
       external: ['nodemailer'],
