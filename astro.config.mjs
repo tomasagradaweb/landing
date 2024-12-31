@@ -6,6 +6,10 @@ export default defineConfig({
   output: 'server', // Cambiado de 'static' a 'server'
   adapter: vercel(),
   vite: {
+    define: {
+      'import.meta.env.STRAPI_URL': JSON.stringify(process.env.STRAPI_URL),
+      'import.meta.env.STRAPI_API_TOKEN': JSON.stringify(process.env.STRAPI_API_TOKEN)
+    },
     ssr: {
       external: ['nodemailer'],
     },
